@@ -10,7 +10,7 @@ Rmarkdown is a language for incorporating text and R code into documents so that
 First, we upload data.  I keep data on the internet so it may be accessed and shared anywhere at my discretion.  
 
 ```{r}
-dat=read.csv('hello.csv')
+dat <- read.csv(url('https://raw.githubusercontent.com/jstbcs/RWorkshop/master/w1/hello.csv'))
 ```
 
 Look at raw data:
