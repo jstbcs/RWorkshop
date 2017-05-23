@@ -1,0 +1,36 @@
+---
+title: "Workshop 1: Hello World"
+author: Jeff Rouder & Julia Haaf
+date: May 25th
+output: html_document
+---
+
+Rmarkdown is a language for incorporating text and R code into documents so that analyses may be easily understood, archived, and made reproducible.  This document provides a simple example of a workflow:
+
+First, we upload data.  I keep data on the internet so it may be accessed and shared anywhere at my discretion.  
+
+```{r}
+dat=read.csv('hello.csv')
+```
+
+Look at raw data:
+```{r}
+dat
+```
+
+
+How about some summaries?
+
+```{r}
+tapply(dat$score,dat$condition,summary)
+```
+
+They might be different.  How about a plot:
+```{r}
+boxplot(score~condition,data=dat)
+```
+
+How about a t-test
+```{r}
+t.test(score~condition,data=dat,var.equal=T)
+```

@@ -1,0 +1,54 @@
+---
+title: "Workshop 1: History of R"
+author: Jeff Rouder & Julia Haaf
+date: May 25th
+output: html_document
+---
+
+1. "*Researchers working at Bell Labs are credited with the development of radio astronomy, the transistor, the laser, the charge-coupled device (CCD), information theory, the operating systems Unix, Plan 9, Inferno, and the programming languages C, C++, and S. Eight Nobel Prizes have been awarded for work completed at Bell Laboratories.*"  -- Wikipedia
+
+2. First S is developed in 1975 by John Chambers
++ Designed for data analysis, influenced by C
++ Run on a DEC PDP system.  
++ Ported to UNIX in 1979.  
++ Remained unnamed, wanted SAS for Statistical Analysis System, but that was taken.  S kind of stuck.
++ Released in 1980, source made available in 1981.  
++ First book, 1984. 
++ Closed in 1984 and licensed by AT&T software.
+
+3. New S, 1988-1991, modernization, object oriented improveents.  
++ Culminated in 1991 book Statistical Models in S.  
++ S along with SAS become standards in Statistics departments.
++ Jeff starts S in 1992 on Sun SPARC stations (Sperling/Dosher)
+
+4. 1993 Private start-up acquires exclusive license from AT&T, calls it Splus, and charges a lot of money.  Stat departments pay.  
+
+5. Open source (free) version backwards engineered by Ross Ihaka and Robert Gentleman, named R because it was like S and was the first initial of each author's first name.  Simply no reason to buy Splus.  
++ Conceived in 1992
++ First beta in 1995
++ First stable in 2000
++ I came to Mizzou using R 0.6 in 1999
+
+6. Huge proliferation of packages
++ R-Studio, great front end, beta in 2011, stable in 2016 (Allaire)
++ ggplot/ggplot2/tidy new ways of graphing data (Wickham)
++ RMarkdown document system (Xie)
++ RevolutionR for big data, now developed by Microsoft
++ Shiny R web server
++ R plays nice with just about everything including databases (mySQL), webservers, GitHub, etc.
+
+7. R is
++ An intellectual tour-de-force
++ The 5th most popuplar coding language today 
++ Well positioned for big data, deployment across the web
++ Will be here for the long term
++ Excellent for exploring data, making graphs, ``tinkering."
++ Excellent for transparency, reproducibility
++ Hard to learn
+
+
+8. R is a programming language:
++ Many ways to do the same thing, we will show you our approaches
++ Has programming elements (variables, loops, conditional statements, functions, object)
++ Has procedures as well (short cuts)
++ Focus on the programming side, not the procedures
