@@ -3,14 +3,14 @@ title: "R-1"
 author: "Julia Haaf"
 output:
   ioslides_presentation:
-    logo: MUlogoRGB.png
+    logo: pictures/MUlogoRGB.png
 subtitle: Basics of R and R studio 
 ---
 
 # Overview
 
 ## What do you expect to learn? <!-- {.flexbox .vcenter} -->
-![](Expectations-reality.png)
+![](pictures/Expectations-reality.png)
 
 </br>
 
@@ -70,7 +70,7 @@ box(lwd = 2)
 </br>
 
 <div class = "centered", style = "padding-bottom: 10px">
-<img src="Rlogo.png" height="150px" width="150px" />
+<img src="pictures/Rlogo.png" height="150px" width="150px" />
 
 <span style = "font-size: 75%">[R-Project](http://www.r-project.org/)</span>
 </div>
@@ -107,22 +107,22 @@ box(lwd = 2)
 <!-- - Scripte können mit jedem Text-Editor geschreiben werden (z.B. Wordpad, TextEdit, Notepad++, Sublime Text, Atom, etc.) -->
 <!-- </div> -->
 
-## What is RStudio?
-*Integrated development environment* (IDE)
-<div class="columns-2", style = "padding-top: 50px;">
+<!-- ## What is RStudio? -->
+<!-- *Integrated development environment* (IDE) -->
+<!-- <div class="columns-2", style = "padding-top: 50px;"> -->
 
 
-- Text-Editor
-- R-Konsole
-- Datei-Browser
-- Datenansicht
-- Debugger
-- ...
+<!-- - Text-Editor -->
+<!-- - R-Konsole -->
+<!-- - Datei-Browser -->
+<!-- - Datenansicht -->
+<!-- - Debugger -->
+<!-- - ... -->
 
-<div class = "centered", style = "padding-bottom: 200px">
-![RStudio-Logo](abbildungen/1_r_studio.png)
-</div>
-</div>
+<!-- <div class = "centered", style = "padding-bottom: 200px"> -->
+<!-- ![RStudio-Logo](abbildungen/1_r_studio.png) -->
+<!-- </div> -->
+<!-- </div> -->
 
 
 <!-- ## Installation von R & RStudio -->
