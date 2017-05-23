@@ -125,7 +125,7 @@ $(document).ready(function () {
 
 <p>Rmarkdown is a language for incorporating text and R code into documents so that analyses may be easily understood, archived, and made reproducible. This document provides a simple example of a workflow:</p>
 <p>First, we upload data. I keep data on the internet so it may be accessed and shared anywhere at my discretion.</p>
-<pre class="r"><code>dat=read.csv('hello.csv')</code></pre>
+<pre class="r"><code>dat &lt;- read.csv(url('https://raw.githubusercontent.com/jstbcs/RWorkshop/master/w1/hello.csv'))</code></pre>
 <p>Look at raw data:</p>
 <pre class="r"><code>dat</code></pre>
 <pre><code>##    condition score
