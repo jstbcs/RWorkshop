@@ -1,6 +1,6 @@
 ---
 title: "R-1"
-author: "Julia Haaf"
+author: "Julia Haaf and Jeff Rouder (thanks to Frederik Aust)"
 output:
   ioslides_presentation:
     logo: pictures/MUlogoRGB.png
