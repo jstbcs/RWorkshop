@@ -267,7 +267,7 @@ Variables are called *objects*
 ## Vectors
 ```{r}
 staff <- c("Josh", "CJ", "Sam")
-alter <- c(42, 39, 38)
+age <- c(42, 39, 38)
 female <- c(FALSE, TRUE, FALSE)
 
 staff
@@ -329,7 +329,7 @@ y <- c(6:10)
 
 **Make a new vector `z` from `x` and `y`.**
 
-**Delete the forst four elements from `z`.**
+**Delete the first four elements from `z`.**
 
 **Select every second element from `z`.**
 
@@ -347,7 +347,7 @@ help("%%")
 z <- c(x, y)
 ```
 
-**Delete the forst four elements from `z`.**
+**Delete the first four elements from `z`.**
 ```{r}
 z <- z[c(5, 6, 7, 8, 9, 10)]
 z
@@ -367,12 +367,22 @@ c(1:6) %% 2 == 0
 z[c(1:6) %% 2 == 0]
 ```
 
+## Trial & Error 2
+**Select every second element from `z`.**
+
+Or
+```{r}
+ind <- rep(c(F, T), length(z)/2)
+z[ind]
+```
+
 ## Matrices
 Matrices are "tables" with at least one row and one column.
 
 ```{r echo = FALSE}
 m <- matrix(1:9, nrow = 3)
 ```
+
 ```{r}
 m # A matrix
 ```
@@ -449,7 +459,7 @@ Vectors and matrices can only contain one data type.
 
 The data we analyze are different types.
 
-## data.frame
+## data.frame {.build}
 A `data.frame` is
 
 - a table similar to a matrix
@@ -463,119 +473,154 @@ The structure of the data should be
 - one observation per row
 - one variable per column
 
-<!-- ## Trial & Error 5 -->
-<!-- **Make the following `data.frame` and figure out how to index them.** -->
+## Trial & Error 5
+**Make the following `data.frame` and figure out how to index it.**
 
-<!-- ```{r eval = FALSE} -->
-<!-- ?data.frame -->
+```{r eval = FALSE}
+?data.frame
 
-<!-- teachers -->
-<!-- ``` -->
+teachers
+```
 
-<!-- ```{r echo = FALSE} -->
-<!-- name <- c("Julia", "Jeff") -->
-<!-- age <- c(27, 51) -->
-<!-- job <- rep("teacher", 2) -->
-<!-- friends <- c(3, 6) -->
-<!-- income <- c(":(", ":)") -->
+```{r echo = FALSE}
+name <- c("Julia", "Jeff")
+age <- c(27, 60)
+job <- rep("teacher", 2)
+friends <- c(3, 6)
+income <- c(":(", ":)")
 
-<!-- (teachers <- data.frame(name, age, job, friends, income)) -->
-<!-- ``` -->
+(teachers <- data.frame(name, age, job, friends, income))
+```
 
+## Trial & Error 5
+**Make the following `data.frame` and figure out how to index it.**
 
-<!-- ## Trial & Error 5 -->
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+```{r echo = FALSE}
+name <- c("Julia", "Jeff")
+age <- c(27, 60)
+job <- rep("teacher", 2)
+friends <- c(3, 6)
+income <- c(":(", ":)")
 
-<!-- ```{r eval = FALSE} -->
-<!-- name <- c("Tobias", "Frederik") -->
-<!-- alter <- c(27, 29) -->
-<!-- job <- rep("Dozent", 2) -->
-<!-- freunde <- c(4, 3) -->
-<!-- einkommen <- c(2500, 2500) -->
-<!-- arbeitszeit <- c(200, 210) -->
+teachers <- data.frame(name, age, job, friends, income)
+```
 
-<!-- dozenten <- data.frame(name, alter, job, freunde,  -->
-<!--                        einkommen, arbeitszeit) -->
-<!-- ``` -->
+## Trial & Error 5
+**Make the following `data.frame` and figure out how to index it.**
 
-<!-- ## Trial & Error 5 -->
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+```{r}
+teachers[2, ]
+teachers[, "friends"]
+teachers$income
+```
 
-<!-- ```{r} -->
-<!-- dozenten[2, ] -->
-<!-- dozenten[, "freunde"] -->
-<!-- dozenten$einkommen -->
-<!-- ``` -->
+## Trial & Error 5
+**Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.**
 
-<!-- ## Trial & Error 5 -->
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+```{r}
+teachers[teachers$name == "Julia", ]
+teachers[teachers$friends < 4, ]
+```
 
-<!-- ```{r} -->
-<!-- dozenten[dozenten$name == "Tobias", ] -->
-<!-- dozenten[dozenten$freunde < 4, ] -->
-<!-- ``` -->
+## Trial & Error 6
+New data:
 
-<!-- ```{r echo = FALSE} -->
-<!-- name <- c("Ben", "Martin", "Paul", "Tobias", "Frederik") -->
-<!-- alter <- c(24, 43, 32, 27, 29) -->
-<!-- job <- rep("Dozent", 5) -->
-<!-- freunde <- c(5, 2, 0, 3, 4) -->
-<!-- einkommen <- c(2000, 4000, 3500, 2500, 2500) -->
-<!-- arbeitszeit <- c(120, 180, 80, 200, 210) -->
+```{r}
+name <- c("Ben", "Kathy", "Paul", "Julia", "Jeff")
+age <- c(24, 43, 32, 27, 60)
+job <- rep("teacher", 5)
+friends <- c(5, 2, 0, 3, 6)
+pets <- c(0, 2, 4, 1, 1)
+income <- c(":/", ":)", ":(", ":(", ":)")
 
-<!-- dozenten <- data.frame(name, alter, job, freunde, einkommen, arbeitszeit) -->
-<!-- save(dozenten, file = "1_daten/dozenten.RData") -->
-<!-- ``` -->
+teachers <- data.frame(name, age, job, friends, pets, income)
+save(teachers, file = "data/teachers.RData")
+```
 
+```{r echo = FALSE}
+name <- c("Ben", "Kathy", "Paul", "Julia", "Jeff")
+age <- c(24, 43, 32, 27, 60)
+job <- rep("teacher", 5)
+friends <- c(5, 2, 0, 3, 6)
+pets <- c(0, 2, 4, 1, 1)
+income <- c(":/", ":)", ":(", ":(", ":)")
+
+teachers <- data.frame(name, age, job, friends, pets, income)
+save(teachers, file = "data/teachers.RData")
+```
+
+## Trial & Error 6
+**Load data `teachers.RData`. Calculate the pets to friends ratio and add this variable to the `data.frame`.**
+
+**Create a new `data.frame` called "poor" with the teachers who have a sad-face income. Remove all `poor` people from the original `data.frame`.**
+
+```{r eval = FALSE}
+?Comparison
+```
+
+**Calculate the average age for happy-face income and sad-face income.**
+
+```{r eval = FALSE}
+?mean
+```
 
 <!-- ## Trial & Error 6 -->
-<!-- **Laden Sie den Datensatz `dozenen.RData`. Berechnen Sie den Studenlohn aller Dozenten und fügen Sie diesen als neue Variable in den `data.frame` hinzu.** -->
+<!-- **Load data `teachers.RData`. Calculate the salary per hour and add this variable to the `data.frame`.** -->
 
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+<!-- **Create a new `data.frame` called "poor" with the teachers who have a sad-face income. Remove all `poor` people from the original `data.frame`.** -->
 
 <!-- ```{r eval = FALSE} -->
 <!-- ?Comparison -->
 <!-- ``` -->
 
-<!-- **Berechnen Sie die durchschnittle Anzahl der Freunde für `dozenten` und `armeschlucker`.** -->
+<!-- **Calculate the average number of friends for happy-face income and sad-face income.** -->
 
 <!-- ```{r eval = FALSE} -->
 <!-- ?mean -->
 <!-- ``` -->
 
 
-<!-- ## Trial & Error 6 -->
-<!-- **Berechnen Sie den Studenlohn aller Dozenten und fügen Sie diesen als neue Variable in den `data.frame` hinzu.** -->
+## Trial & Error 6
+**Calculate the pets to friends ratio and add this variable to the `data.frame`.**
 
-<!-- ```{r} -->
-<!-- dozenten$stundenlohn <- dozenten$einkommen / dozenten$arbeitszeit -->
-<!-- dozenten -->
-<!-- ``` -->
+```{r}
+teachers$ratio <- teachers$pets / teachers$friends
+teachers
+```
 
-<!-- ## Trial & Error 6 -->
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+## Trial & Error 6
+**Create a new `data.frame` called "poor" with the teachers who have a sad-face income. Remove all `poor` people from the original `data.frame`.**
 
-<!-- ```{r} -->
-<!-- (armeschlucker <- dozenten[dozenten$stundenlohn < 17, ]) -->
-<!-- dozenten <- dozenten[dozenten$stundenlohn >= 17, ] -->
-<!-- ``` -->
+```{r}
+(poor <- teachers[teachers$income == ":(", ])
+teachers <- teachers[teachers$income != ":(", ]
+```
 
-<!-- ## Trial & Error 6 -->
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+## Trial & Error 6
+**Create a new `data.frame` called "poor" with the teachers who have a sad-face income. Remove all `poor` people from the original `data.frame`.**
 
-<!-- Noch etwas einfacher: -->
-<!-- ```{r eval = FALSE} -->
-<!-- armeschlucker <- subset(dozenten, stundenlohn < 17) -->
-<!-- dozenten <- subset(dozenten, studenlohn >= 17) -->
-<!-- ``` -->
+Easier:
+```{r eval = FALSE}
+poor <- subset(teachers, income == ":(")
+teachers <- subset(teachers, income != ":(")
+```
 
-<!-- ## Trial & Error 6 -->
-<!-- **Berechnen Sie die durchschnittle Anzahl der Freunde für `dozenten` und `armeschlucker`.** -->
+## Trial & Error 6
+**Calculate the average age for happy-face income and sad-face income.**
 
-<!-- ```{r} -->
-<!-- mean(dozenten$freunde) -->
-<!-- mean(armeschlucker$freunde) -->
-<!-- ``` -->
+```{r}
+mean(teachers$age[teachers$income == ":)"])
+mean(poor$age)
+```
+
+## Trial & Error 6
+**Calculate the average age for happy-face income and sad-face income.**
+
+Or
+```{r}
+teachers.all <- rbind(poor, teachers)
+tapply(teachers.all$age, teachers.all$income, mean)
+```
 
 <!-- ## list -->
 <!-- Die `list` ist das flexibelste Objekt in R. Listen können enthalten -->
@@ -589,16 +634,16 @@ The structure of the data should be
 <!--     - andere `list`en -->
 
 <!-- ## Trial & Error 7 -->
-<!-- **Erstellen Sie eine `list` die `dozenten` und `armeschlucker` enthält. Erstellen Sie eine weitere `list`, die diese soeben erstellte `list` und eine Variable "beschreibung" mit einer Beschreibung der Daten enthält.** -->
+<!-- **Erstellen Sie eine `list` die `teachers` und `armeschlucker` enthält. Erstellen Sie eine weitere `list`, die diese soeben erstellte `list` und eine Variable "beschreibung" mit einer Beschreibung der Daten enthält.** -->
 
 <!-- ```{r eval = FALSE} -->
 <!-- ?list -->
 <!-- ``` -->
 
 <!-- ## Trial & Error 7 -->
-<!-- **Erstellen Sie eine `list` die `dozenten` und `armeschlucker` enthält.** -->
+<!-- **Erstellen Sie eine `list` die `teachers` und `armeschlucker` enthält.** -->
 <!-- ```{r} -->
-<!-- (daten <- list(dozenten = dozenten, armeschlucker = armeschlucker)) -->
+<!-- (daten <- list(teachers = teachers, armeschlucker = armeschlucker)) -->
 <!-- ``` -->
 
 <!-- ## Trial & Error 7 -->
@@ -607,7 +652,7 @@ The structure of the data should be
 <!-- ```{r} -->
 <!-- inception <- list(daten = daten, studie = "Umfrage zum Einkommen") -->
 <!-- inception$studie -->
-<!-- inception$daten$dozenten -->
+<!-- inception$daten$teachers -->
 <!-- ``` -->
 
 <!-- ## Faktoren -->
@@ -645,7 +690,7 @@ The structure of the data should be
 <!-- ``` -->
 
 <!-- ## Trial & Error 8 -->
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen geordneten `factor` der die Personen entsprehend kodiert (`armeschlucker` haben einen Stundenlohn < 17€).** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen geordneten `factor` der die Personen entsprehend kodiert (`armeschlucker` haben einen Stundenlohn < 17€).** -->
 
 <!-- ```{r eval = FALSE} -->
 <!-- ?rbind -->
@@ -653,15 +698,15 @@ The structure of the data should be
 <!-- ``` -->
 
 <!-- ## Trial & Error 8 -->
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
-<!-- umfrage <- rbind(dozenten, armeschlucker) -->
+<!-- umfrage <- rbind(teachers, armeschlucker) -->
 <!-- umfrage -->
 <!-- ``` -->
 
 <!-- ## Trial & Error 8 -->
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
 <!-- umfrage$typ <- ifelse(umfrage$stundenlohn < 17, -->
@@ -671,65 +716,62 @@ The structure of the data should be
 <!-- ``` -->
 
 <!-- ## Trial & Error 8 -->
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
 <!-- class(umfrage$typ) -->
 <!-- (umfrage$typ <- factor(umfrage$typ, ordered = TRUE)) -->
 <!-- ``` -->
 
-<!-- ## Fehlende Daten -->
-<!-- Im echten Leben muss man sich leider häufiger mit fehlenden Daten rumschlagen. -->
+## Missing Data
 
-<!-- In R werden diese mit `NA` kodiert. -->
+Missing data is coded as `NA` in R.
 
-<!-- ```{r} -->
-<!-- umfrage[3, "einkommen"] <- NA -->
-<!-- umfrage[, "einkommen"] -->
-<!-- ``` -->
+```{r}
+teachers.all[teachers.all$name == "Jeff", "age"] <- NA
+teachers.all$age
+```
 
-<!-- ## Trial & Error 9 -->
-<!-- **Definieren Sie das Einkommen des dritten Dozenten als fehlenden Wert. Berechnen Sie erneut das durchschnittliche Einkommen von `umfrage`.** -->
+## Missing Data
 
-<!-- ```{r eval = FALSE} -->
-<!-- umfrage[3, "einkommen"] <- NA -->
-<!-- ``` -->
+```{r}
+mean(teachers.all$age)
+mean(teachers.all$age, na.rm = TRUE)
+```
 
-<!-- ## Trial & Error 9 -->
-<!-- **Definieren Sie das Einkommen des dritten Dozenten als fehlenden Wert. Berechnen Sie erneut das durchschnittliche Einkommen von `umfrage`.** -->
+## Missing Data
+Incomplete cases can easily be removed.
+```{r}
+complete.cases(teachers.all)
+teachers.all[complete.cases(teachers.all), c("name", "age", "income")]
+```
 
-<!-- ```{r} -->
-<!-- mean(umfrage$einkommen) -->
-<!-- mean(umfrage$einkommen, na.rm = TRUE) -->
-<!-- ``` -->
+## Missing Data
+Missing data can be replaced. But be careful!
+```{r}
+is.na(teachers.all)
+teachers.all[is.na(teachers.all)] <- 50
+```
 
-<!-- ## Fehlende Daten -->
-<!-- Unvollständige Fälle können bei Bedarf leicht aussortiert werden. -->
-<!-- ```{r} -->
-<!-- complete.cases(umfrage) -->
-<!-- umfrage[complete.cases(umfrage), c("name", "alter", "einkommen")] -->
-<!-- ``` -->
+## Overview
+It is often useful to get an overview over the structure of a `data.frame`.
 
+```{r}
+str(teachers.all)
+```
 
-<!-- ## Überblick über Objekte -->
-<!-- Es ist oft sinnvoll sich einen Überblick über die Struktur eines Datensatzes zu verschaffen. -->
+## Overview
+A summary of the values can also help.
 
-<!-- ```{r} -->
-<!-- str(umfrage) -->
-<!-- ``` -->
-
-<!-- ## Überblick über Objekte -->
-<!-- Eine Zusammenfassung der Werte kann ebenfalls sinnvoll sein. -->
-
-<!-- ```{r} -->
-<!-- summary(umfrage[, c("name", "freunde", "einkommen", "typ")]) -->
-<!-- ``` -->
+```{r}
+summary(teachers.all[, c("name", "friends", "income", "age")])
+```
 
 <!-- ## Variablen löschen -->
 <!-- Zuletzt wollen wir noch aufräumen. Variablen können aus dem workspace gelöscht werden. -->
 
 <!-- ```{r} -->
-<!-- rm("dozenten") -->
+<!-- rm("teachers") -->
 <!-- ``` -->
 
 <!-- Um alle Variablen zu löschen kann man den Knopf "Clear" im Reiter "Environment" benutzen oder -->
@@ -739,16 +781,18 @@ The structure of the data should be
 <!-- rm(list = ls()) -->
 <!-- ``` -->
 
-<!-- ## Wiederholung -->
-<!-- Probieren Sie doch mal das R-Paket `swirl` aus. -->
+## Swirl
+Try out the R-package `swirl`.
 
-<!-- ```{r eval = FALSE} -->
-<!-- install.packages("swirl") -->
-<!-- library("swirl") -->
+```{r eval = FALSE}
+install.packages("swirl")
+library("swirl")
 
-<!-- install_from_swirl("R Programming Alt") -->
-<!-- swirl() -->
-<!-- ``` -->
+install_from_swirl("R Programming")
+swirl()
+#try 10: lapply and sapply
+#try 11: vapply and tapply
+```
 
 <!-- Arbeiten Sie Lessons 1-7 durch. -->
 

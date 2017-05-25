@@ -422,7 +422,7 @@ president &lt;- TRUE         # Boolean</pre>
 </article></slide><slide class=''><hgroup><h2>Vectors</h2></hgroup><article  id="vectors">
 
 <pre class = 'prettyprint lang-r'>staff &lt;- c(&quot;Josh&quot;, &quot;CJ&quot;, &quot;Sam&quot;)
-alter &lt;- c(42, 39, 38)
+age &lt;- c(42, 39, 38)
 female &lt;- c(FALSE, TRUE, FALSE)
 
 staff</pre>
@@ -431,7 +431,7 @@ staff</pre>
 
 <pre class = 'prettyprint lang-r'>age</pre>
 
-<pre >## [1] 65</pre>
+<pre >## [1] 42 39 38</pre>
 
 <pre class = 'prettyprint lang-r'>female</pre>
 
@@ -523,7 +523,7 @@ y &lt;- c(6:10)</pre>
 
 <p><strong>Make a new vector <code>z</code> from <code>x</code> and <code>y</code>.</strong></p>
 
-<p><strong>Delete the forst four elements from <code>z</code>.</strong></p>
+<p><strong>Delete the first four elements from <code>z</code>.</strong></p>
 
 <p><strong>Select every second element from <code>z</code>.</strong></p>
 
@@ -537,7 +537,7 @@ help(&quot;%%&quot;)
 
 <pre class = 'prettyprint lang-r'>z &lt;- c(x, y)</pre>
 
-<p><strong>Delete the forst four elements from <code>z</code>.</strong></p>
+<p><strong>Delete the first four elements from <code>z</code>.</strong></p>
 
 <pre class = 'prettyprint lang-r'>z &lt;- z[c(5, 6, 7, 8, 9, 10)]
 z</pre>
@@ -560,6 +560,17 @@ z &lt;- z[-c(1:4)] # Without elements 1 to 4</pre>
 <pre >## [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE</pre>
 
 <pre class = 'prettyprint lang-r'>z[c(1:6) %% 2 == 0]</pre>
+
+<pre >## [1]  6  8 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 2</h2></hgroup><article  id="trial-error-2-3">
+
+<p><strong>Select every second element from <code>z</code>.</strong></p>
+
+<p>Or</p>
+
+<pre class = 'prettyprint lang-r'>ind &lt;- rep(c(F, T), length(z)/2)
+z[ind]</pre>
 
 <pre >## [1]  6  8 10</pre>
 
@@ -670,7 +681,7 @@ m1 %*% m2</pre>
 
 <p>The data we analyze are different types.</p>
 
-</article></slide><slide class=''><hgroup><h2>data.frame</h2></hgroup><article  id="data.frame-1">
+</article></slide><slide class=''><hgroup><h2>data.frame</h2></hgroup><article  id="data.frame-1" class="build">
 
 <p>A <code>data.frame</code> is</p>
 
@@ -689,111 +700,85 @@ m1 %*% m2</pre>
 <li>one variable per column</li>
 </ul>
 
-<!-- ## Trial & Error 5 -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 5</h2></hgroup><article  id="trial-error-5">
 
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+<p><strong>Make the following <code>data.frame</code> and figure out how to index it.</strong></p>
 
-<!-- ```{r eval = FALSE} -->
+<pre class = 'prettyprint lang-r'>?data.frame
 
-<!-- ?data.frame -->
+teachers</pre>
 
-<!-- dozenten -->
+<pre >##    name age     job friends income
+## 1 Julia  27 teacher       3     :(
+## 2  Jeff  60 teacher       6     :)</pre>
 
-<!-- ``` -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 5</h2></hgroup><article  id="trial-error-5-1">
 
-<!-- ```{r echo = FALSE} -->
+<p><strong>Make the following <code>data.frame</code> and figure out how to index it.</strong></p>
 
-<!-- name <- c("Tobias", "Frederik") -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 5</h2></hgroup><article  id="trial-error-5-2">
 
-<!-- alter <- c(27, 29) -->
+<p><strong>Make the following <code>data.frame</code> and figure out how to index it.</strong></p>
 
-<!-- job <- rep("Dozent", 2) -->
+<pre class = 'prettyprint lang-r'>teachers[2, ]</pre>
 
-<!-- freunde <- c(4, 3) -->
+<pre >##   name age     job friends income
+## 2 Jeff  60 teacher       6     :)</pre>
 
-<!-- einkommen <- c(2500, 2500) -->
+<pre class = 'prettyprint lang-r'>teachers[, &quot;friends&quot;]</pre>
 
-<!-- arbeitszeit <- c(200, 210) -->
+<pre >## [1] 3 6</pre>
 
-<!-- (dozenten <- data.frame(name, alter, job, freunde, einkommen, arbeitszeit)) -->
+<pre class = 'prettyprint lang-r'>teachers$income</pre>
 
-<!-- ``` -->
+<pre >## [1] :( :)
+## Levels: :( :)</pre>
 
-<!-- ## Trial & Error 5 -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 5</h2></hgroup><article  id="trial-error-5-3">
 
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+<p><strong>Erstellen Sie folgenden <code>data.frame</code> und probieren Sie aus, wie man ihn indizieren kann.</strong></p>
 
-<!-- ```{r eval = FALSE} -->
+<pre class = 'prettyprint lang-r'>teachers[teachers$name == &quot;Julia&quot;, ]</pre>
 
-<!-- name <- c("Tobias", "Frederik") -->
+<pre >##    name age     job friends income
+## 1 Julia  27 teacher       3     :(</pre>
 
-<!-- alter <- c(27, 29) -->
+<pre class = 'prettyprint lang-r'>teachers[teachers$friends &lt; 4, ]</pre>
 
-<!-- job <- rep("Dozent", 2) -->
+<pre >##    name age     job friends income
+## 1 Julia  27 teacher       3     :(</pre>
 
-<!-- freunde <- c(4, 3) -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6">
 
-<!-- einkommen <- c(2500, 2500) -->
+<p>New data:</p>
 
-<!-- arbeitszeit <- c(200, 210) -->
+<pre class = 'prettyprint lang-r'>name &lt;- c(&quot;Ben&quot;, &quot;Kathy&quot;, &quot;Paul&quot;, &quot;Julia&quot;, &quot;Jeff&quot;)
+age &lt;- c(24, 43, 32, 27, 60)
+job &lt;- rep(&quot;teacher&quot;, 5)
+friends &lt;- c(5, 2, 0, 3, 6)
+pets &lt;- c(0, 2, 4, 1, 1)
+income &lt;- c(&quot;:/&quot;, &quot;:)&quot;, &quot;:(&quot;, &quot;:(&quot;, &quot;:)&quot;)
 
-<!-- dozenten <- data.frame(name, alter, job, freunde,  -->
+teachers &lt;- data.frame(name, age, job, friends, pets, income)
+save(teachers, file = &quot;data/teachers.RData&quot;)</pre>
 
-<!--                        einkommen, arbeitszeit) -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-1">
 
-<!-- ``` -->
+<p><strong>Load data <code>teachers.RData</code>. Calculate the pets to friends ratio and add this variable to the <code>data.frame</code>.</strong></p>
 
-<!-- ## Trial & Error 5 -->
+<p><strong>Create a new <code>data.frame</code> called &quot;poor&quot; with the teachers who have a sad-face income. Remove all <code>poor</code> people from the original <code>data.frame</code>.</strong></p>
 
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+<pre class = 'prettyprint lang-r'>?Comparison</pre>
 
-<!-- ```{r} -->
+<p><strong>Calculate the average age for happy-face income and sad-face income.</strong></p>
 
-<!-- dozenten[2, ] -->
-
-<!-- dozenten[, "freunde"] -->
-
-<!-- dozenten$einkommen -->
-
-<!-- ``` -->
-
-<!-- ## Trial & Error 5 -->
-
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
-
-<!-- ```{r} -->
-
-<!-- dozenten[dozenten$name == "Tobias", ] -->
-
-<!-- dozenten[dozenten$freunde < 4, ] -->
-
-<!-- ``` -->
-
-<!-- ```{r echo = FALSE} -->
-
-<!-- name <- c("Ben", "Martin", "Paul", "Tobias", "Frederik") -->
-
-<!-- alter <- c(24, 43, 32, 27, 29) -->
-
-<!-- job <- rep("Dozent", 5) -->
-
-<!-- freunde <- c(5, 2, 0, 3, 4) -->
-
-<!-- einkommen <- c(2000, 4000, 3500, 2500, 2500) -->
-
-<!-- arbeitszeit <- c(120, 180, 80, 200, 210) -->
-
-<!-- dozenten <- data.frame(name, alter, job, freunde, einkommen, arbeitszeit) -->
-
-<!-- save(dozenten, file = "1_daten/dozenten.RData") -->
-
-<!-- ``` -->
+<pre class = 'prettyprint lang-r'>?mean</pre>
 
 <!-- ## Trial & Error 6 -->
 
-<!-- **Laden Sie den Datensatz `dozenen.RData`. Berechnen Sie den Studenlohn aller Dozenten und fügen Sie diesen als neue Variable in den `data.frame` hinzu.** -->
+<!-- **Load data `teachers.RData`. Calculate the salary per hour and add this variable to the `data.frame`.** -->
 
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+<!-- **Create a new `data.frame` called "poor" with the teachers who have a sad-face income. Remove all `poor` people from the original `data.frame`.** -->
 
 <!-- ```{r eval = FALSE} -->
 
@@ -801,7 +786,7 @@ m1 %*% m2</pre>
 
 <!-- ``` -->
 
-<!-- **Berechnen Sie die durchschnittle Anzahl der Freunde für `dozenten` und `armeschlucker`.** -->
+<!-- **Calculate the average number of friends for happy-face income and sad-face income.** -->
 
 <!-- ```{r eval = FALSE} -->
 
@@ -809,55 +794,64 @@ m1 %*% m2</pre>
 
 <!-- ``` -->
 
-<!-- ## Trial & Error 6 -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-2">
 
-<!-- **Berechnen Sie den Studenlohn aller Dozenten und fügen Sie diesen als neue Variable in den `data.frame` hinzu.** -->
+<p><strong>Calculate the pets to friends ratio and add this variable to the <code>data.frame</code>.</strong></p>
 
-<!-- ```{r} -->
+<pre class = 'prettyprint lang-r'>teachers$ratio &lt;- teachers$pets / teachers$friends
+teachers</pre>
 
-<!-- dozenten$stundenlohn <- dozenten$einkommen / dozenten$arbeitszeit -->
+<pre >##    name age     job friends pets income     ratio
+## 1   Ben  24 teacher       5    0     :/ 0.0000000
+## 2 Kathy  43 teacher       2    2     :) 1.0000000
+## 3  Paul  32 teacher       0    4     :(       Inf
+## 4 Julia  27 teacher       3    1     :( 0.3333333
+## 5  Jeff  60 teacher       6    1     :) 0.1666667</pre>
 
-<!-- dozenten -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-3">
 
-<!-- ``` -->
+<p><strong>Create a new <code>data.frame</code> called &quot;poor&quot; with the teachers who have a sad-face income. Remove all <code>poor</code> people from the original <code>data.frame</code>.</strong></p>
 
-<!-- ## Trial & Error 6 -->
+<pre class = 'prettyprint lang-r'>(poor &lt;- teachers[teachers$income == &quot;:(&quot;, ])</pre>
 
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+<pre >##    name age     job friends pets income     ratio
+## 3  Paul  32 teacher       0    4     :(       Inf
+## 4 Julia  27 teacher       3    1     :( 0.3333333</pre>
 
-<!-- ```{r} -->
+<pre class = 'prettyprint lang-r'>teachers &lt;- teachers[teachers$income != &quot;:(&quot;, ]</pre>
 
-<!-- (armeschlucker <- dozenten[dozenten$stundenlohn < 17, ]) -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-4">
 
-<!-- dozenten <- dozenten[dozenten$stundenlohn >= 17, ] -->
+<p><strong>Create a new <code>data.frame</code> called &quot;poor&quot; with the teachers who have a sad-face income. Remove all <code>poor</code> people from the original <code>data.frame</code>.</strong></p>
 
-<!-- ``` -->
+<p>Easier:</p>
 
-<!-- ## Trial & Error 6 -->
+<pre class = 'prettyprint lang-r'>poor &lt;- subset(teachers, income == &quot;:(&quot;)
+teachers &lt;- subset(teachers, income != &quot;:(&quot;)</pre>
 
-<!-- **Erstellen Sie dann einen neuen `data.frame` mit dem Namen "armeschlucker" in dem nur Dozenten vorkommen, deren Stundenlohn weniger als 17€ beträgt. Entfernen Sie alle `armeschlucker` aus dem ursprünglichen `data.frame`.** -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-5">
 
-<!-- Noch etwas einfacher: -->
+<p><strong>Calculate the average age for happy-face income and sad-face income.</strong></p>
 
-<!-- ```{r eval = FALSE} -->
+<pre class = 'prettyprint lang-r'>mean(teachers$age[teachers$income == &quot;:)&quot;])</pre>
 
-<!-- armeschlucker <- subset(dozenten, stundenlohn < 17) -->
+<pre >## [1] 51.5</pre>
 
-<!-- dozenten <- subset(dozenten, studenlohn >= 17) -->
+<pre class = 'prettyprint lang-r'>mean(poor$age)</pre>
 
-<!-- ``` -->
+<pre >## [1] 29.5</pre>
 
-<!-- ## Trial & Error 6 -->
+</article></slide><slide class=''><hgroup><h2>Trial &amp; Error 6</h2></hgroup><article  id="trial-error-6-6">
 
-<!-- **Berechnen Sie die durchschnittle Anzahl der Freunde für `dozenten` und `armeschlucker`.** -->
+<p><strong>Calculate the average age for happy-face income and sad-face income.</strong></p>
 
-<!-- ```{r} -->
+<p>Or</p>
 
-<!-- mean(dozenten$freunde) -->
+<pre class = 'prettyprint lang-r'>teachers.all &lt;- rbind(poor, teachers)
+tapply(teachers.all$age, teachers.all$income, mean)</pre>
 
-<!-- mean(armeschlucker$freunde) -->
-
-<!-- ``` -->
+<pre >##   :/   :(   :) 
+## 24.0 29.5 51.5</pre>
 
 <!-- ## list -->
 
@@ -877,7 +871,7 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 7 -->
 
-<!-- **Erstellen Sie eine `list` die `dozenten` und `armeschlucker` enthält. Erstellen Sie eine weitere `list`, die diese soeben erstellte `list` und eine Variable "beschreibung" mit einer Beschreibung der Daten enthält.** -->
+<!-- **Erstellen Sie eine `list` die `teachers` und `armeschlucker` enthält. Erstellen Sie eine weitere `list`, die diese soeben erstellte `list` und eine Variable "beschreibung" mit einer Beschreibung der Daten enthält.** -->
 
 <!-- ```{r eval = FALSE} -->
 
@@ -887,11 +881,11 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 7 -->
 
-<!-- **Erstellen Sie eine `list` die `dozenten` und `armeschlucker` enthält.** -->
+<!-- **Erstellen Sie eine `list` die `teachers` und `armeschlucker` enthält.** -->
 
 <!-- ```{r} -->
 
-<!-- (daten <- list(dozenten = dozenten, armeschlucker = armeschlucker)) -->
+<!-- (daten <- list(teachers = teachers, armeschlucker = armeschlucker)) -->
 
 <!-- ``` -->
 
@@ -905,7 +899,7 @@ m1 %*% m2</pre>
 
 <!-- inception$studie -->
 
-<!-- inception$daten$dozenten -->
+<!-- inception$daten$teachers -->
 
 <!-- ``` -->
 
@@ -963,7 +957,7 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 8 -->
 
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen geordneten `factor` der die Personen entsprehend kodiert (`armeschlucker` haben einen Stundenlohn < 17€).** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen geordneten `factor` der die Personen entsprehend kodiert (`armeschlucker` haben einen Stundenlohn < 17€).** -->
 
 <!-- ```{r eval = FALSE} -->
 
@@ -975,11 +969,11 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 8 -->
 
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
 
-<!-- umfrage <- rbind(dozenten, armeschlucker) -->
+<!-- umfrage <- rbind(teachers, armeschlucker) -->
 
 <!-- umfrage -->
 
@@ -987,7 +981,7 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 8 -->
 
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
 
@@ -1001,7 +995,7 @@ m1 %*% m2</pre>
 
 <!-- ## Trial & Error 8 -->
 
-<!-- **Fügen Sie `dozenten` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
+<!-- **Fügen Sie `teachers` und `armeschlucker` wieder zu einem `data.frame` zusammen und erstellen Sie einen `factor` der die Personen entsprehend kodiert.** -->
 
 <!-- ```{r} -->
 
@@ -1011,73 +1005,84 @@ m1 %*% m2</pre>
 
 <!-- ``` -->
 
-<!-- ## Fehlende Daten -->
+</article></slide><slide class=''><hgroup><h2>Missing Data</h2></hgroup><article  id="missing-data">
 
-<!-- Im echten Leben muss man sich leider häufiger mit fehlenden Daten rumschlagen. -->
+<p>Missing data is coded as <code>NA</code> in R.</p>
 
-<!-- In R werden diese mit `NA` kodiert. -->
+<pre class = 'prettyprint lang-r'>teachers.all[teachers.all$name == &quot;Jeff&quot;, &quot;age&quot;] &lt;- NA
+teachers.all$age</pre>
 
-<!-- ```{r} -->
+<pre >## [1] 32 27 24 43 NA</pre>
 
-<!-- umfrage[3, "einkommen"] <- NA -->
+</article></slide><slide class=''><hgroup><h2>Missing Data</h2></hgroup><article  id="missing-data-1">
 
-<!-- umfrage[, "einkommen"] -->
+<pre class = 'prettyprint lang-r'>mean(teachers.all$age)</pre>
 
-<!-- ``` -->
+<pre >## [1] NA</pre>
 
-<!-- ## Trial & Error 9 -->
+<pre class = 'prettyprint lang-r'>mean(teachers.all$age, na.rm = TRUE)</pre>
 
-<!-- **Definieren Sie das Einkommen des dritten Dozenten als fehlenden Wert. Berechnen Sie erneut das durchschnittliche Einkommen von `umfrage`.** -->
+<pre >## [1] 31.5</pre>
 
-<!-- ```{r eval = FALSE} -->
+</article></slide><slide class=''><hgroup><h2>Missing Data</h2></hgroup><article  id="missing-data-2">
 
-<!-- umfrage[3, "einkommen"] <- NA -->
+<p>Incomplete cases can easily be removed.</p>
 
-<!-- ``` -->
+<pre class = 'prettyprint lang-r'>complete.cases(teachers.all)</pre>
 
-<!-- ## Trial & Error 9 -->
+<pre >## [1]  TRUE  TRUE  TRUE  TRUE FALSE</pre>
 
-<!-- **Definieren Sie das Einkommen des dritten Dozenten als fehlenden Wert. Berechnen Sie erneut das durchschnittliche Einkommen von `umfrage`.** -->
+<pre class = 'prettyprint lang-r'>teachers.all[complete.cases(teachers.all), c(&quot;name&quot;, &quot;age&quot;, &quot;income&quot;)]</pre>
 
-<!-- ```{r} -->
+<pre >##    name age income
+## 3  Paul  32     :(
+## 4 Julia  27     :(
+## 1   Ben  24     :/
+## 2 Kathy  43     :)</pre>
 
-<!-- mean(umfrage$einkommen) -->
+</article></slide><slide class=''><hgroup><h2>Missing Data</h2></hgroup><article  id="missing-data-3">
 
-<!-- mean(umfrage$einkommen, na.rm = TRUE) -->
+<p>Missing data can be replaced. But be careful!</p>
 
-<!-- ``` -->
+<pre class = 'prettyprint lang-r'>is.na(teachers.all)</pre>
 
-<!-- ## Fehlende Daten -->
+<pre >##    name   age   job friends  pets income ratio
+## 3 FALSE FALSE FALSE   FALSE FALSE  FALSE FALSE
+## 4 FALSE FALSE FALSE   FALSE FALSE  FALSE FALSE
+## 1 FALSE FALSE FALSE   FALSE FALSE  FALSE FALSE
+## 2 FALSE FALSE FALSE   FALSE FALSE  FALSE FALSE
+## 5 FALSE  TRUE FALSE   FALSE FALSE  FALSE FALSE</pre>
 
-<!-- Unvollständige Fälle können bei Bedarf leicht aussortiert werden. -->
+<pre class = 'prettyprint lang-r'>teachers.all[is.na(teachers.all)] &lt;- 50</pre>
 
-<!-- ```{r} -->
+</article></slide><slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview-2">
 
-<!-- complete.cases(umfrage) -->
+<p>It is often useful to get an overview over the structure of a <code>data.frame</code>.</p>
 
-<!-- umfrage[complete.cases(umfrage), c("name", "alter", "einkommen")] -->
+<pre class = 'prettyprint lang-r'>str(teachers.all)</pre>
 
-<!-- ``` -->
+<pre >## &#39;data.frame&#39;:    5 obs. of  7 variables:
+##  $ name   : Factor w/ 5 levels &quot;Ben&quot;,&quot;Jeff&quot;,&quot;Julia&quot;,..: 5 3 1 4 2
+##  $ age    : num  32 27 24 43 50
+##  $ job    : Factor w/ 1 level &quot;teacher&quot;: 1 1 1 1 1
+##  $ friends: num  0 3 5 2 6
+##  $ pets   : num  4 1 0 2 1
+##  $ income : Factor w/ 3 levels &quot;:/&quot;,&quot;:(&quot;,&quot;:)&quot;: 2 2 1 3 3
+##  $ ratio  : num  Inf 0.333 0 1 0.167</pre>
 
-<!-- ## Überblick über Objekte -->
+</article></slide><slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview-3">
 
-<!-- Es ist oft sinnvoll sich einen Überblick über die Struktur eines Datensatzes zu verschaffen. -->
+<p>A summary of the values can also help.</p>
 
-<!-- ```{r} -->
+<pre class = 'prettyprint lang-r'>summary(teachers.all[, c(&quot;name&quot;, &quot;friends&quot;, &quot;income&quot;, &quot;age&quot;)])</pre>
 
-<!-- str(umfrage) -->
-
-<!-- ``` -->
-
-<!-- ## Überblick über Objekte -->
-
-<!-- Eine Zusammenfassung der Werte kann ebenfalls sinnvoll sein. -->
-
-<!-- ```{r} -->
-
-<!-- summary(umfrage[, c("name", "freunde", "einkommen", "typ")]) -->
-
-<!-- ``` -->
+<pre >##     name      friends    income      age      
+##  Ben  :1   Min.   :0.0   :/:1   Min.   :24.0  
+##  Jeff :1   1st Qu.:2.0   :(:2   1st Qu.:27.0  
+##  Julia:1   Median :3.0   :):2   Median :32.0  
+##  Kathy:1   Mean   :3.2          Mean   :35.2  
+##  Paul :1   3rd Qu.:5.0          3rd Qu.:43.0  
+##            Max.   :6.0          Max.   :50.0</pre>
 
 <!-- ## Variablen löschen -->
 
@@ -1085,7 +1090,7 @@ m1 %*% m2</pre>
 
 <!-- ```{r} -->
 
-<!-- rm("dozenten") -->
+<!-- rm("teachers") -->
 
 <!-- ``` -->
 
@@ -1099,21 +1104,17 @@ m1 %*% m2</pre>
 
 <!-- ``` -->
 
-<!-- ## Wiederholung -->
+</article></slide><slide class=''><hgroup><h2>Swirl</h2></hgroup><article  id="swirl">
 
-<!-- Probieren Sie doch mal das R-Paket `swirl` aus. -->
+<p>Try out the R-package <code>swirl</code>.</p>
 
-<!-- ```{r eval = FALSE} -->
+<pre class = 'prettyprint lang-r'>install.packages(&quot;swirl&quot;)
+library(&quot;swirl&quot;)
 
-<!-- install.packages("swirl") -->
-
-<!-- library("swirl") -->
-
-<!-- install_from_swirl("R Programming Alt") -->
-
-<!-- swirl() -->
-
-<!-- ``` -->
+install_from_swirl(&quot;R Programming&quot;)
+swirl()
+#try 10: lapply and sapply
+#try 11: vapply and tapply</pre>
 
 <!-- Arbeiten Sie Lessons 1-7 durch. -->
 
