@@ -464,23 +464,22 @@ The structure of the data should be
 - one variable per column
 
 <!-- ## Trial & Error 5 -->
-<!-- **Erstellen Sie folgenden `data.frame` und probieren Sie aus, wie man ihn indizieren kann.** -->
+<!-- **Make the following `data.frame` and figure out how to index them.** -->
 
 <!-- ```{r eval = FALSE} -->
 <!-- ?data.frame -->
 
-<!-- dozenten -->
+<!-- teachers -->
 <!-- ``` -->
 
 <!-- ```{r echo = FALSE} -->
-<!-- name <- c("Tobias", "Frederik") -->
-<!-- alter <- c(27, 29) -->
-<!-- job <- rep("Dozent", 2) -->
-<!-- freunde <- c(4, 3) -->
-<!-- einkommen <- c(2500, 2500) -->
-<!-- arbeitszeit <- c(200, 210) -->
+<!-- name <- c("Julia", "Jeff") -->
+<!-- age <- c(27, 51) -->
+<!-- job <- rep("teacher", 2) -->
+<!-- friends <- c(3, 6) -->
+<!-- income <- c(":(", ":)") -->
 
-<!-- (dozenten <- data.frame(name, alter, job, freunde, einkommen, arbeitszeit)) -->
+<!-- (teachers <- data.frame(name, age, job, friends, income)) -->
 <!-- ``` -->
 
 
