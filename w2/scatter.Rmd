@@ -1,7 +1,7 @@
 ---
 title: "Workshop 2: Basic Plots"
 author: Jeff Rouder & Julia Haaf
-date: May 25th
+date: June xth
 output: html_document
 ---
 
@@ -10,24 +10,71 @@ output: html_document
 Difference between *Quick and Dirty* and *Publication Quality* plots.
 
 
-The following code makes hypothetical data.  We are not going to cover it because unless you routinely make up your data, it is not as relevant as plotting and analyzing data.
-```{r}
+
+
+```{r,echo=FALSE}
 set.seed(123)
 M=60
 absence=rpois(M,2)
 grade=round(rbeta(M,10,absence+1)*100.2)
+dat=data.frame(absence,grade)
+write.table(file="grade.dat",dat,quote=F,row.names=F)
 ```
 
-So let's start here:
-
-Our goal is to understand the relationship. between absences and grades.  We wish to make two plots, one of the distribution of grades, and another that highlights the relationship.
-
-Let's look at the distribution.  We can start with a quick-and-dirty histogram
+We wish to understand the relationship between absences and grades.  I have a little data set at .  Let's load it
 ```{r}
-hist(grade)
+dat=read.table('grade.dat',head=T)
+head(dat)
 ```
 
-That is an ugly graph, but we have learned a lot.  Suppose we wish to assign letter grades.  We might be interested in knowing what percentage of the class could correspond to what grade.
+
+
+Here is a quick look:
+```{r}
+plot(dat$absence,dat$grade)
+```
+
+The key here is the plot() function.  At a minimum, it takes two vectors, x and y.  And that is all we used here.
+
+Let's plot a function.
+```{r}
+z <- seq(-3,3,.1)
+y <- dnorm(z)
+plot(z,y)
+```
+
+```{r}
+plot(z,y,typ='l')
+```
+
+Line and point plots are key.  Here is an example:
+```{r}
+dat <- matrix(nrow=2,ncol=3,c(4,6,8,5,7,7),byrow=T)
+rownames(dat) <- c('A1','A2')
+colnames(dat) <- c('B1','B2','B3')
+print(dat)
+```
+
+Plot points and lines for A1:
+```{r}
+plot(dat[1,],typ='b')  #or typ='p' or typ='l'
+```
+
+Plot both, make a little fancy:
+```{r}
+plot(1:3,dat[1,],typ='l')
+lines(1:3,dat[2,])
+```
+
+We can add points too:
+
+```{r}
+plot(1:3,dat[1,],typ='l')
+lines(1:3,dat[2,])
+points(1:3,dat[1,])
+points(1:3,dat[2,])
+```
+
 
 ```{r}
 plot(ecdf(grade))
@@ -43,6 +90,7 @@ plot(sortGrade)
 Here is a quick look:
 ```{r}
 plot(absence,grade)
+lines(lowess(absence,grade))
 ```
 
 Let's look at absences:
