@@ -1,0 +1,52 @@
+---
+title: "Workshop 2: Basic Plots"
+author: Jeff Rouder & Julia Haaf
+date: May 25th
+output: html_document
+---
+
+# Plots
+
+Difference between *Quick and Dirty* and *Publication Quality* plots.
+
+
+The following code makes hypothetical data.  We are not going to cover it because unless you routinely make up your data, it is not as relevant as plotting and analyzing data.
+```{r}
+set.seed(123)
+M=60
+absence=rpois(M,2)
+grade=round(rbeta(M,10,absence+1)*100.2)
+```
+
+So let's start here:
+
+Our goal is to understand the relationship. between absences and grades.  We wish to make two plots, one of the distribution of grades, and another that highlights the relationship.
+
+Let's look at the distribution.  We can start with a quick-and-dirty histogram
+```{r}
+hist(grade)
+```
+
+That is an ugly graph, but we have learned a lot.  Suppose we wish to assign letter grades.  We might be interested in knowing what percentage of the class could correspond to what grade.
+
+```{r}
+plot(ecdf(grade))
+abline(v=c(60,70,80,90))
+```
+different distrubtional representation.  I like the following quantile-based representation:
+
+```{r}
+sortGrade=sort(grade)
+plot(sortGrade)
+```
+
+Here is a quick look:
+```{r}
+plot(absence,grade)
+```
+
+Let's look at absences:
+```{r}
+table(absence)
+```
+
