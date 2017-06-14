@@ -1,0 +1,278 @@
+---
+title: "R-1"
+author: "Julia Haaf and Jeff Rouder (thanks to Frederik Aust)"
+output:
+  ioslides_presentation:
+    logo: pictures/MUlogoRGB.png
+subtitle: Basics of R and R studio 
+---
+
+```{r, echo = F}
+knitr::opts_chunk$set(fig.width=6, fig.align = "center",
+                      warning=FALSE, message=FALSE)
+
+polyCI <- function(upper, lower, col, x = F){
+  len <- length(upper)
+  if(!is.numeric(x)) x <- 1:len
+  polygon(x = c(x[rev(1 : len)], x[1 : len])
+          , y = c(rev(lower), upper)
+          , col = col
+          , border = NA)
+}
+
+library("papaja")
+```
+
+
+##Overview
+
+* [ ] Making a figure pretty
+    + [x] Adding lines
+    + [x] Colors
+    + [x] Colors by groups
+    + [x] Types of points and lines
+    + [ ] Axes
+    + [ ] Legends
+* [ ] Saving figures
+* [ ] More than one panel
+
+##Data
+
+```{r, echo = F, eval = "asis"}
+set.seed(123)
+trait <- seq(-1, 1, .05)
+I <- length(trait)
+state <- .4* trait +  .2
+state.men <- state + c(rep(0, 30), c(.02 * (1:(I-30))))
+noise.trait <- .2
+noise.state <- .2
+
+sub <- 1:(2*I)
+gen <- rep(1:2, each = I)
+t.t <- rep(1:I, 2)
+
+obs.trait <- rnorm(2*I, trait[t.t], noise.trait)
+obs.state <- rnorm(2*I, c(state, state.men), noise.state)
+
+dat <- data.frame(sub, gender = gen, agg.t = obs.trait, agg.s = obs.state)
+dat$gender <- as.factor(dat$gender)
+levels(dat$gender) <- c("w", "m")
+
+knitr::kable(head(dat))
+```
+
+N = `r (N = nrow(dat))` (`r I` women and men)
+
+
+##What we are interested in
+
+```{r fig-nice, echo = F}
+women <- subset(dat, gender == "w")
+men <- subset(dat, gender == "m")
+
+fit.loess.w <- loess(women$agg.s ~ women$agg.t)
+fit.loess.m <- loess(men$agg.s ~ men$agg.t)
+
+plot(agg.s ~ agg.t
+     , data = dat
+     , col = c("darkblue", "darkred")[gender]
+     , pch = 20
+     , xlab = "Trait Aggression"
+     , ylab = "State Aggression")
+# abline(lm(obs.state[gen == 0] ~ obs.trait[gen == 0]), col == "red")
+
+
+## Set a simple 95% CI on the fit.loess model
+xw <- women$agg.t
+ciw <- data.frame(est = predict(fit.loess.w, data.frame(x = xw), se = T)$fit
+                 , upper = predict(fit.loess.w, data.frame(x = xw)) +
+                   predict(fit.loess.w, data.frame(x = xw), se=TRUE)$se.fit * qnorm(1-.05/2)
+                 , lower = predict(fit.loess.w, data.frame(x = xw)) -
+                   predict(fit.loess.w, data.frame(x = xw), se=TRUE)$se.fit * qnorm(1-.05/2)
+                 )
+ciw <- ciw[order(xw),]
+
+# matplot(new.x, ci, lty = c(1,2,2), col = c("darkblue", 4, 4), type = "l", add=T)
+polyCI(upper = ciw$upper, lower = ciw$lower, col = adjustcolor( "darkblue", alpha.f = 0.2), x = sort(xw))
+
+xm <- men$agg.t
+cim <- data.frame(est =predict(fit.loess.m, data.frame(x = xm))
+                 , upper = predict(fit.loess.m, data.frame(x = xm)) + 
+                   predict(fit.loess.m, data.frame(x = xm), se = TRUE)$se.fit * qnorm(1-.05/2)
+                 , lower = predict(fit.loess.m, data.frame(x=xm)) - 
+                   predict(fit.loess.m, data.frame(x = xm), se = TRUE)$se.fit * qnorm(1-.05/2)
+                 )
+cim <- cim[order(xm),]
+
+polyCI(upper = cim$upper, lower = cim$lower, col = adjustcolor( "darkred", alpha.f = 0.2), x = sort(xm))
+
+lines(sort(xw)
+      , ciw$est
+      , col = "darkblue"
+      , lty = 'dotted')
+lines(sort(xm)
+      , cim$est
+      , col = "darkred"
+      , lty = 'dotted')
+
+# matplot(new.x, ci, lty = c(1,2,2), col = c("darkred", 2, 2), type = "l", add=T)
+
+legend(
+  "topleft"
+  , legend = c("women", "men")
+  , col = c("darkblue", "darkred")
+  , pch = 20
+  , bty = 'n'
+)
+```
+
+##Scatterplot
+
+```{r, fig.width=6}
+plot(agg.s ~ agg.t
+     , data = dat)
+```
+
+##Low vs. high aggression score 
+
+```{r, fig.width=6}
+plot(agg.s ~ agg.t
+     , data = dat)
+```
+
+##low vs. high aggression score 
+
+```{r}
+plot(agg.s ~ agg.t
+     , data = dat)
+abline(v = 0)
+```
+
+##low vs. high aggression score 
+
+```{r, fig.width=5, fig.height=4, echo = F}
+plot(agg.s ~ agg.t
+     , data = dat)
+abline(v = 0)
+```
+
+**How do I add a `horizontal` line?**
+
+##Scatterplot with trend
+
+```{r, echo = F}
+model <- lm(agg.s ~ agg.t
+           , data = dat)
+```
+
+```{r, echo = F, fig.width=6}
+plot(agg.s ~ agg.t
+     , data = dat)
+abline(model)
+```
+
+##Scatterplot with trend
+
+```{r}
+model <- lm(agg.s ~ agg.t
+           , data = dat)
+```
+
+```{r, fig.width=4, fig.height=3.5}
+plot(agg.s ~ agg.t
+     , data = dat)
+abline(model)
+```
+
+##Colors
+
+```{r, echo = F}
+plot(agg.s ~ agg.t, data = dat
+     , col = rainbow(N))
+```
+
+##Colors
+
+[There are beautiful colors all over the internet](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
+
+```{r}
+plot(agg.s ~ agg.t, data = dat
+     , col = "seagreen")
+```
+
+##Color for plots and lines
+
+```{r}
+plot(agg.s ~ agg.t, data = dat
+     , col = "seagreen")
+abline(model, col = "green")
+```
+
+##Using different colors for different groups
+
+```{r, echo = FALSE}
+knitr::kable(head(dat))
+```
+
+##Using different colors for different groups
+
+```{r, fig.height=4, fig.width=5}
+mycolors <- c("darkblue", "darkred")
+plot(agg.s ~ agg.t , data = dat
+     , col = mycolors[gender])
+```
+
+##Types of lines and points
+
+```{r, echo = F}
+plot(agg.s ~ agg.t, data = dat
+     , pch = sub)
+for(i in 1:6){
+abline(a = model$coefficients[1] +  seq(0, .5, .1)[i]
+       , b = model$coefficients[2]
+       , lty = i)}
+```
+
+##Types of lines and points <!-- {.flexbox .vcenter} -->
+
+<div class="columns-2">
+
+<div class = "centered", style = "padding-bottom: 10px">
+
+**pch**
+
+<img src="pictures/pch.png" height="350px" width="350px" />
+</div>
+    
+</br>
+
+<div class = "centered", style = "padding-bottom: 10px">
+
+**lty**
+
+<img src="pictures/lty.png" height="350px" width="350px" />
+</div>
+
+</div>
+
+
+##Types of points
+
+```{r, eval = FALSE}
+?pch #my preferred: 19 (regular filled points) and 20 (small filled points)
+```
+
+```{r, fig.height=4, fig.width=5}
+plot(agg.s ~ agg.t, data = dat
+     , pch = 19)
+```
+
+##Types of lines
+
+```{r, fig.height=4, fig.width=5}
+plot(agg.s ~ agg.t, data = dat, pch = 19)
+abline(model
+       , lty = 'dotted')
+```
+
+
