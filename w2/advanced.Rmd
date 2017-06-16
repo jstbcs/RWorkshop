@@ -1,0 +1,216 @@
+---
+title: "Workshop 2: More Advanced Plots"
+author: Jeff Rouder & Julia Haaf
+date: June xth
+output:
+  ioslides_presentation:
+    logo: pictures/MUlogoRGB.png
+---
+
+## R's Greatest Strength is Graphing
+
+http://www.r-graph-gallery.com
+
+## Real Example, Lexical Decision
+
+```{r,echo=FALSE}
+cleanLD5=function()
+{
+indat=read.table(url('https://raw.githubusercontent.com/PerceptionCognitionLab/data0/master/lexDec-dist5/ld5.all'))
+colnames(indat)=c('sub','block','trial','stim','resp','rt','error')
+bad1=indat$sub%in%c(34,43)
+bad2=indat$rt<250 | indat$rt>2000
+bad3=indat$err==1
+bad4=indat$block==0 & indat$trial<20
+bad5=indat$trial==0
+bad=bad1 | bad2 | bad3 |bad4 |bad5
+dat=indat[!bad,]
+return(dat)
+}
+```
+
+```{r}
+dat=cleanLD5()
+head(dat)
+```
+
+## Let's look at means.
+```{r}
+mrt=tapply(dat$rt,dat$stim,mean)
+stimVal=c(2:4,6:8)
+plot(stimVal,mrt)
+lines(stimVal,mrt)
+```
+
+## Cleaner Version
+
+```{r,eval=F}
+plot(stimVal,mrt,typ='n',
+     ylab="Response Time (ms)",xlab="Digit",ylim=c(575,650))
+lines(stimVal[1:3],mrt[1:3])
+lines(stimVal[4:6],mrt[4:6])
+points(stimVal,mrt,pch=21,bg='green',cex=1.2)
+abline(v=5,lty=2)
+```
+
+## Cleaner Version
+
+```{r,echo=F}
+plot(stimVal,mrt,typ='n',
+     ylab="Response Time (ms)",xlab="Digit",ylim=c(575,650))
+lines(stimVal[1:3],mrt[1:3])
+lines(stimVal[4:6],mrt[4:6])
+points(stimVal,mrt,pch=21,bg='green',cex=1.2)
+abline(v=5,lty=2)
+```
+
+
+## People?
+
+```{r}
+irt=tapply(dat$rt,list(dat$stim,dat$sub),mean)
+stimVal=c(2:4,6:8)
+matplot(stimVal,irt,typ='b')
+```
+
+## Cleaner Version
+
+```{r}
+matplot(stimVal,irt,typ='l',lty=1,col=rgb(.5,0,0,.2),lwd=1)
+lines(stimVal[1:3],mrt[1:3],lwd=2)
+lines(stimVal[4:6],mrt[4:6],lwd=2)
+points(stimVal,mrt,pch=21,bg='green',cex=1.2)
+```
+
+## Remove Within-Subject Variability
+```{r}
+iSpeed=tapply(dat$rt,dat$sub,mean)
+irtW=t(t(irt)-as.vector(iSpeed))
+grandMean=mean(iSpeed)
+```
+
+## Remove Within-Subject Variability
+```{r}
+matplot(stimVal,irtW,typ='n')
+matlines(stimVal[1:3],irtW[1:3,],lty=1,col=rgb(.5,0,0,.2),lwd=1)
+matlines(stimVal[4:6],irtW[4:6,],lty=1,col=rgb(.5,0,0,.2),lwd=1)
+lines(stimVal[1:3],mrt[1:3]-grandMean,lwd=2)
+lines(stimVal[4:6],mrt[4:6]-grandMean,lwd=2)
+points(stimVal,mrt-grandMean,pch=21,bg='green',cex=1.2)
+```
+
+## Where in the Distribution is the effect?
+
+Look at fastest 5%
+Look at slowest 20%
+
+```{r}
+fast=tapply(dat$rt,list(dat$sub,dat$stim),quantile,p=.05)
+meanFast=apply(fast,2,mean)
+slow=tapply(dat$rt,list(dat$sub,dat$stim),quantile,p=.80)
+meanSlow=apply(slow,2,mean)
+```
+
+## Distribution Effect
+
+```{r,eval=T,echo=FALSE}
+plot(stimVal,meanFast,typ='n',
+     ylab="Response Time (ms)",xlab="Digit",ylim=c(400,750))
+lines(stimVal[1:3],meanFast[1:3])
+lines(stimVal[4:6],meanFast[4:6])
+points(stimVal,meanFast,pch=21,bg='green',cex=1.2)
+lines(stimVal[1:3],meanSlow[1:3])
+lines(stimVal[4:6],meanSlow[4:6])
+points(stimVal,meanSlow,pch=21,bg='blue',cex=1.2)
+lines(stimVal[1:3],mrt[1:3])
+lines(stimVal[4:6],mrt[4:6])
+points(stimVal,mrt,pch=21,bg='red',cex=1.2)
+legend(4.6,600,legend=c("5%","M","80%"),pt.bg=c("green","red","blue"),pch=21)
+```
+
+## Distribution Effect
+
+```{r,eval=F,echo=TRUE}
+plot(stimVal,meanFast,typ='n',
+     ylab="Response Time (ms)",xlab="Digit",ylim=c(400,750))
+lines(stimVal[1:3],meanFast[1:3])
+lines(stimVal[4:6],meanFast[4:6])
+points(stimVal,meanFast,pch=21,bg='green',cex=1.2)
+lines(stimVal[1:3],meanSlow[1:3])
+lines(stimVal[4:6],meanSlow[4:6])
+points(stimVal,meanSlow,pch=21,bg='blue',cex=1.2)
+lines(stimVal[1:3],mrt[1:3])
+lines(stimVal[4:6],mrt[4:6])
+points(stimVal,mrt,pch=21,bg='red',cex=1.2)
+legend(4.6,600,legend=c("5%","M","80%"),
+       pt.bg=c("green","red","blue"),pch=21)
+```
+
+## Look at Five Related Variables
+
+Make Data:
+```{r,echo=T}
+set.seed(123)
+library(MASS)
+#create vectors -- these will be our columns
+a <- c(1,2,3,4,5,6)
+b <- c(2,3,5,6,1,9)
+c <- c(3,2,4,5,9,9)
+d <- c(10,20,30,30,50,40)
+e <- c(7,8,9,4,6,10)
+ 
+#create matrix from vectors
+M <- cbind(a,b,c,d,e)
+dat=as.data.frame(mvrnorm(100,rep(0,5),cov(M)))
+colnames(dat)=LETTERS[1:5]
+```
+
+## Here is the Data
+
+```{r}
+head(dat)
+```
+
+## All pairs of scatter plots
+```{r}
+pairs(dat)
+```
+
+## Correlations
+```{r}
+cor(dat)
+```
+
+## Classic MDS
+```{r}
+d <- dist(dat) # euclidean distances between the rows
+fit <- cmdscale(d,eig=TRUE, k=5) # k is the number of dim
+```
+
+## Plot MDS Solution
+```{r}
+x <- fit$points[,1]
+y <- fit$points[,2]
+plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2", 
+  main="Metric	MDS",	type="n")
+text(x, y,1:100)
+```
+
+## Radar Plots
+
+```{r}
+library(psych)
+spider(y=1:10,data=dat,rescale=T,overlay=T,center=T,fill=F,connect=T)
+```
+
+## Plain Old Plots
+```{r}
+matplot(t(dat),typ='l')
+```
+
+## Plain Old Plots
+Standardize
+```{r}
+scaled.dat <- scale(dat)
+matplot(t(scaled.dat),typ='l')
+```

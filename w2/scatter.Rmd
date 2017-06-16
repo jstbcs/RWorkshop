@@ -2,15 +2,17 @@
 title: "Workshop 2: Basic Plots"
 author: Jeff Rouder & Julia Haaf
 date: June xth
-output: html_document
+output:
+  ioslides_presentation:
+    logo: pictures/MUlogoRGB.png
 ---
 
-# Plots
+## 
 
 Difference between *Quick and Dirty* and *Publication Quality* plots.
 
 
-
+##
 
 ```{r,echo=FALSE}
 set.seed(123)
@@ -21,6 +23,8 @@ dat=data.frame(absence,grade)
 write.table(file="grade.dat",dat,quote=F,row.names=F)
 ```
 
+## Grades and Absences
+
 We wish to understand the relationship between absences and grades.  I have a little data set at .  Let's load it
 ```{r}
 dat=read.table('grade.dat',head=T)
@@ -28,73 +32,77 @@ head(dat)
 ```
 
 
+## Quick Look
 
-Here is a quick look:
 ```{r}
 plot(dat$absence,dat$grade)
 ```
 
-The key here is the plot() function.  At a minimum, it takes two vectors, x and y.  And that is all we used here.
-
-Let's plot a function.
+## Let's plot a function.
 ```{r}
 z <- seq(-3,3,.1)
 y <- dnorm(z)
 plot(z,y)
 ```
 
+## Let's make it nicer
+
 ```{r}
 plot(z,y,typ='l')
 ```
 
-Line and point plots are key.  Here is an example:
-```{r}
-dat <- matrix(nrow=2,ncol=3,c(4,6,8,5,7,7),byrow=T)
-rownames(dat) <- c('A1','A2')
-colnames(dat) <- c('B1','B2','B3')
-print(dat)
-```
-
-Plot points and lines for A1:
-```{r}
-plot(dat[1,],typ='b')  #or typ='p' or typ='l'
-```
-
-Plot both, make a little fancy:
-```{r}
-plot(1:3,dat[1,],typ='l')
-lines(1:3,dat[2,])
-```
-
-We can add points too:
+## Lines and Points
 
 ```{r}
-plot(1:3,dat[1,],typ='l')
-lines(1:3,dat[2,])
-points(1:3,dat[1,])
-points(1:3,dat[2,])
+expt <- matrix(nrow=2,ncol=3,c(4,6,8,5,7,7),byrow=T)
+rownames(expt) <- c('A1','A2')
+colnames(expt) <- c('B1','B2','B3')
+print(expt)
 ```
 
+## Plot points and lines for A1:
+```{r}
+plot(1:3,expt[1,],typ='b')  #or typ='p' or typ='l'
+```
+
+## Plot both:
+```{r}
+plot(1:3,expt[1,],typ='l')
+lines(1:3,expt[2,])
+```
+
+## We can add points too:
 
 ```{r}
-plot(ecdf(grade))
-abline(v=c(60,70,80,90))
-```
-different distrubtional representation.  I like the following quantile-based representation:
-
-```{r}
-sortGrade=sort(grade)
-plot(sortGrade)
+plot(1:3,expt[1,],typ='l')
+lines(1:3,expt[2,])
+points(1:3,expt[1,])
+points(1:3,expt[2,])
 ```
 
-Here is a quick look:
+
+## Barplots
+
 ```{r}
-plot(absence,grade)
-lines(lowess(absence,grade))
+barplot(expt,beside=T,legend=T)
 ```
 
-Let's look at absences:
+## Histogram of Grades
+
 ```{r}
-table(absence)
+hist(grade)
 ```
+
+## Boxplots
+```{r}
+boxplot(grade)
+```
+
+## Two Boxplots
+```{r}
+x=rnorm(100,0,1)
+y=rnorm(100,.5,1.5)
+boxplot(x,y)
+```
+
 
