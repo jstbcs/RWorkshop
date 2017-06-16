@@ -1,0 +1,105 @@
+---
+title: "Confidence intervals in graphs"
+author: "Julia Haaf"
+date: "June 16, 2017"
+output: html_document
+---
+
+```{r data}
+dat <- read.table("data/data.4.dat", header = T)
+
+#cleaning
+col.names <- c("subject", "group", "age", "sex", "hand", "language", "color",  "major", "cs", "rep", "word", "isWord", "isPositive", "USpositive", "isMasked", "us0", "us1", "us2", "us3", "us4", "liking0", "liking1", "liking2", "valenceResponse", "valenceRT", "visibleResponsePos", "visibleResponse", "visibleResponseText", "visibleCorrect", "visibleRT")
+
+colnames(dat) <- col.names
+
+dat$meanLiking <- rowMeans(dat[, paste0("liking", 0:2)])
+dat$USpositive <- factor(dat$USpositive, labels = c("negative", "positive"))
+dat$isMasked <- factor(dat$isMasked, labels = c("30ms/masked", "30ms/unmasked", "100ms/unmasked"))
+```
+
+
+## Confidence intervals using plotrix
+
+```{r}
+means <- tapply(dat$meanLiking, list(dat$USpositive, dat$isMasked), mean)
+sds <- tapply(dat$meanLiking, list(dat$USpositive, dat$isMasked), sd)
+
+
+```
+
+
+## Confidence regions
+
+I wrote a little function to make it easier to graph confidence regions:
+
+```{r}
+polyCI <- function(upper, lower, col, x = F){
+  len <- length(upper)
+  if(!is.numeric(x)) x <- 1:len
+  polygon(x = c(x[rev(1 : len)], x[1 : len])
+          , y = c(rev(lower), upper)
+          , col = col
+          , border = NA)
+}
+```
+
+Here is how it works:
+
+```{r}
+set.seed(123)
+x <- rnorm(40)
+df <- data.frame(x = x,
+                 y = x + rnorm(40))
+
+plot(y ~ x, data = df)
+
+# model
+mod <- lm(y ~ x, data = df)
+
+# predicts + interval
+newx <- seq(min(df$x), max(df$x), length.out = 40)
+preds <- predict(mod, newdata = data.frame(x=newx), 
+                 interval = 'confidence')
+
+# plot
+plot(y ~ x, data = df, pch = 20)
+polyCI(upper = preds[, "upr"]
+       , lower = preds[, "lwr"]
+       , col = adjustcolor("lightsteelblue3", alpha.f = .5)
+       , x = preds[, "fit"])
+abline(mod, lty = "dotted", col = "steelblue4")
+```
+
+
+## APA figures using papaja
+
+```{r}
+library("papaja")
+apa_beeplot(
+  data = dat
+ , id = "subject"
+ , dv = "meanLiking"
+ , factors = c("isMasked", "USpositive")
+ , main = "Stimulus Rating"
+ , xlab = "Stimulus identification"
+ , ylab = "Rating"
+ , args_points = list(bg = c("#fc8d59", "lightblue"), col = c("#b30000", "#045a8d"), cex = c(1.5))
+ , args_legend = list(x = "bottomright", horiz = FALSE, bg = c("#fc8d59", "lightblue"), col = c("#b30000", "#045a8d"), cex=0.85, title = "US Valence")
+)
+```
+
+```{r}
+apa_lineplot(
+  data = dat
+ , id = "subject"
+ , dv = "meanLiking"
+ , factors = c("isMasked", "USpositive")
+ , main = "Stimulus Rating"
+ , xlab = "Stimulus identification"
+ , ylab = "Rating"
+ , ylim = c(3, 7)
+ , args_points = list(bg = c("#fc8d59", "lightblue"), col = c("#b30000", "#045a8d"), cex = c(1.5))
+ , args_legend = list(x = "bottomright", horiz = FALSE, bg = c("#fc8d59", "lightblue"), col = c("#b30000", "#045a8d"), cex=0.85, title = "US Valence")
+)
+```

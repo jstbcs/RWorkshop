@@ -402,6 +402,7 @@ par(font = 1)
 ```{r, fig.width=5, fig.height=4, eval=F}
 png(filename = "myfigure.png" #<--
     , width = 800, height = 700, pointsize = 24) #<--
+
 plot(agg.s ~ agg.t, data = dat, pch = 20, col = "hotpink"
      , xlab = "My X", ylab = "My Y", main = "My Figure")
 abline(model, lty = 'dotted', col = "red")
@@ -409,6 +410,7 @@ legend("topleft", legend = c("Path to love", "Heart")
        , lty = c('dotted', 'blank')
        , pch = c(NA, 20)
        , col = c("red", "hotpink"))
+
 dev.off() #<--
 ```
 
