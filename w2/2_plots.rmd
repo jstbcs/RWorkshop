@@ -1,10 +1,10 @@
 ---
-title: "R-1"
-author: "Julia Haaf and Jeff Rouder (thanks to Frederik Aust)"
+title: "R-2"
+author: "Julia Haaf and Jeff Rouder"
 output:
   ioslides_presentation:
     logo: pictures/MUlogoRGB.png
-subtitle: Basics of R and R studio 
+subtitle: Making Figures With R
 ---
 
 ```{r, echo = F}
@@ -23,18 +23,18 @@ polyCI <- function(upper, lower, col, x = F){
 library("papaja")
 ```
 
-
+<!--
 ##Overview
 
-* [ ] Making a figure pretty
+* [x] Making a figure pretty
     + [x] Adding lines
     + [x] Colors
     + [x] Colors by groups
     + [x] Types of points and lines
-    + [ ] Axes
-    + [ ] Legends
-* [ ] Saving figures
-* [ ] More than one panel
+    + [x] Axes
+    + [x] Legends
+* [x] Saving figures
+* [x] More than one panel -->
 
 ##Data
 
@@ -275,4 +275,166 @@ abline(model
        , lty = 'dotted')
 ```
 
+## Axes
 
+```{r, echo = F}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5
+     , ylim = c(0, 1.6)
+     , ylab = "Only positive"
+     , xlab = "Still the same"
+     , cex = seq(.8, 3, length.out = 2*I)
+     , cex.lab = 1.5
+     , cex.axis = 1.2
+     , cex.main = 1.8
+     , frame.plot = F
+     , main = "My lovely figure"
+     , col = rainbow(I*2, start = 5/6)[sample(1:(2*I), 2*I)])
+abline(model
+       , lty = 'dotted'
+       )
+```
+
+
+## Axes: Labels
+
+```{r, fig.width=5, fig.height=4}
+plot(agg.s ~ agg.t, data = dat, pch = 19
+     , xlab = "My x variable", ylab = "My y variable")
+```
+
+## Axes: Labels
+
+```{r, fig.width=5, fig.height=4}
+plot(agg.s ~ agg.t, data = dat, pch = 19
+     , xlab = "My x variable", ylab = "My y variable"
+     , cex.lab = 1.5)
+```
+
+## Axes: Limits
+
+```{r, fig.width=5, fig.height=4}
+plot(agg.s ~ agg.t, data = dat, pch = 19
+     , xlab = "My x variable", ylab = "My y variable"
+     , xlim = c(-.2, 3), ylim = c(-1, 0))
+```
+
+## Main title
+
+```{r, fig.width=5, fig.height=4}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5
+     , main = "My lovely figure"
+     , cex.main = 1.5)
+```
+
+##Legends
+
+```{r, echo = F}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5
+     , ylim = c(0, 1.6)
+     , ylab = "Only positive"
+     , xlab = "Still the same"
+     , cex = seq(.8, 3, length.out = 2*I)
+     , cex.lab = 1.5
+     , cex.axis = 1.2
+     , frame.plot = F
+     , col = rainbow(I*2, start = 5/6)[sample(1:(2*I), 2*I)])
+abline(model
+       , lty = 'dotted'
+       , col = "red"
+       )
+par(font = 5)
+legend("topleft"
+       , legend = c("Path to love", "Heart")
+       , lty = c('dotted', 'blank')
+       , pch = c(NA, 169)
+       , text.font = 1
+       , col = c("red", "hotpink")
+       , bty = "n"
+       )
+par(font = 1)
+```
+
+##Legends
+
+```{r, fig.width=5, fig.height=4}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5, col = "hotpink")
+abline(model, lty = 'dotted', col = "red")
+legend("topleft"
+       , legend = c("Path to love", "Heart")
+       , col = c("red", "hotpink"))
+```
+
+##Legends
+
+```{r, fig.width=5, fig.height=4, eval=F}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5, col = "hotpink")
+abline(model, lty = 'dotted', col = "red")
+legend("topleft", legend = c("Path to love", "Heart")
+       , lty = c('dotted', 'blank')
+       , pch = c(NA, 169)
+       , col = c("red", "hotpink"))
+```
+
+```{r, fig.width=5, fig.height=4, echo = F}
+plot(agg.s ~ agg.t, data = dat, pch = 169, font = 5, col = "hotpink")
+abline(model, lty = 'dotted', col = "red")
+par(font = 5)
+legend("topleft"
+       , legend = c("Path to love", "Heart")
+       , lty = c('dotted', 'blank')
+       , pch = c(NA, 169)
+       , text.font = 1
+       , col = c("red", "hotpink")
+       )
+par(font = 1)
+```
+
+## Saving figures
+
+**Advantages**
+
+- Automatic
+- Resolution and output format as needed
+- Everything stay as you choose
+
+## Saving figures
+
+```{r, fig.width=5, fig.height=4, eval=F}
+png(filename = "myfigure.png" #<--
+    , width = 800, height = 700, pointsize = 24) #<--
+plot(agg.s ~ agg.t, data = dat, pch = 20, col = "hotpink"
+     , xlab = "My X", ylab = "My Y", main = "My Figure")
+abline(model, lty = 'dotted', col = "red")
+legend("topleft", legend = c("Path to love", "Heart")
+       , lty = c('dotted', 'blank')
+       , pch = c(NA, 20)
+       , col = c("red", "hotpink"))
+dev.off() #<--
+```
+
+`png` can be replaced with `pdf`, `jpeg`, `bmp`, etc.
+
+## More than one panel
+
+```{r, echo=F, fig.width=8}
+par(mfrow = c(1, 2))
+
+plot(agg.s ~ agg.t, data = dat, pch = 20, col = "hotpink"
+     , xlab = "My X", ylab = "My Y", main = "My Figure")
+abline(model, lty = 'dotted', col = "red")
+
+boxplot(agg.s ~ gender, data = dat, col = c("slategray1", "pink")
+        , names = c("Women", "Men")
+        , main = "By groups"
+        , ylab = "Aggression")
+```
+
+
+## More than one panel
+
+```{r, fig.width=8}
+par(mfrow = c(1, 2)) #<--
+plot(agg.s ~ agg.t, data = dat, pch = 20, col = "hotpink")
+boxplot(agg.s ~ gender, data = dat, col = c("slategray1", "pink")
+        , names = c("Women", "Men"), ylab = "Aggression")
+```
